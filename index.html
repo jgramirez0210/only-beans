@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Only Beans 🫘</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🫘</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-left">
+      <h1>Only Beans</h1>
+      <p class="tagline">swipe the beans</p>
+    </div>
+    <div class="header-right">
+      <div class="counter">♥ <span id="like-count">0</span> liked</div>
+      <button id="add-bean-btn" class="add-btn">+ Add Bean</button>
+    </div>
+  </header>
+
+  <main>
+    <div id="card-area">
+      <div id="card-stack"></div>
+
+      <div id="empty-state" class="hidden">
+        <div class="empty-emoji">🫘</div>
+        <h2>You've seen all the beans!</h2>
+        <p>You liked <strong id="final-count">0</strong> beans</p>
+        <button id="restart-btn">See beans again</button>
+      </div>
+    </div>
+
+    <div class="controls" id="controls">
+      <button id="nope-btn" class="ctrl-btn ctrl-nope" title="Nope (← arrow)">✕</button>
+      <button id="like-btn" class="ctrl-btn ctrl-like" title="Like (→ arrow)">♥</button>
+    </div>
+  </main>
+
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <button id="close-modal" class="modal-close" aria-label="Close">✕</button>
+      <h2 id="modal-title">Add a Bean</h2>
+
+      <form id="upload-form" novalidate>
+        <div class="form-group">
+          <label>Photo</label>
+          <div class="file-input-wrapper">
+            <input type="file" id="bean-photo" accept="image/*">
+            <div class="file-preview" id="file-preview">
+              <span class="file-placeholder">Click to choose a photo</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="bean-name">Bean Name</label>
+          <input type="text" id="bean-name" placeholder="e.g. Mochi's Toe Beans" maxlength="40">
+        </div>
+
+        <div class="form-group">
+          <label>Type</label>
+          <div class="type-toggle">
+            <button type="button" class="type-btn active" data-type="cat">🐾 Toe Bean</button>
+            <button type="button" class="type-btn" data-type="edible">🫘 Edible</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="bean-fact">Fun Fact <span class="optional">(optional)</span></label>
+          <input type="text" id="bean-fact" placeholder="Something interesting about this bean" maxlength="100">
+        </div>
+
+        <div class="form-error hidden" id="form-error">Please add a photo and a name.</div>
+
+        <button type="submit" class="submit-btn">Add to Deck</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
