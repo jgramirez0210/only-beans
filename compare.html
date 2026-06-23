@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Only Beans — Image Source Comparison</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    :root {
+      --cream: #fdf6ec;
+      --text: #3d2c1e;
+      --muted: #9b8470;
+    }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      padding-bottom: 40px;
+    }
+    header {
+      background: white;
+      padding: 16px 20px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header h1 { font-family: 'Fredoka One', sans-serif; font-size: 1.5rem; }
+    header p { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 0;
+      padding: 16px 20px 0;
+      overflow-x: auto;
+    }
+    .tab {
+      flex-shrink: 0;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 12px 12px 0 0;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      cursor: pointer;
+      background: #e8ddd0;
+      color: var(--muted);
+      transition: background 0.2s, color 0.2s;
+    }
+    .tab.active {
+      background: white;
+      color: var(--text);
+    }
+
+    /* Source panels */
+    .panel {
+      display: none;
+      background: white;
+      border-radius: 0 16px 16px 16px;
+      margin: 0 20px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .panel.active { display: block; }
+
+    .source-meta {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 20px;
+      line-height: 1.5;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #f0e8e0;
+    }
+    .source-meta strong { color: var(--text); }
+
+    /* Section headers */
+    .section-label {
+      font-family: 'Fredoka One', sans-serif;
+      font-size: 1rem;
+      margin: 20px 0 12px;
+      color: var(--text);
+    }
+    .section-label:first-of-type { margin-top: 0; }
+
+    /* Bean grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .bean-card {
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--cream);
+      box-shadow: 0 2px 8px rgba(61,44,30,0.1);
+    }
+    .bean-card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      display: block;
+      background: #e8ddd0;
+    }
+    .bean-card .name {
+      padding: 8px 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .bean-card .badge {
+      display: inline-block;
+      font-size: 0.62rem;
+      padding: 1px 6px;
+      border-radius: 999px;
+      margin-top: 2px;
+    }
+    .badge-edible { background: #e8f0e9; color: #3d6b40; }
+    .badge-cat    { background: #fde8ec; color: #8b3040; }
+
+    .fail-img {
+      width: 100%;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      background: #e8ddd0;
+    }
+
+    /* Bottom note */
+    .note {
+      margin: 24px 20px 0;
+      background: #fff8f0;
+      border: 1px solid #e8ddd0;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .note strong { color: var(--text); }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🫘 Image Source Comparison</h1>
+  <p>Browse each source, then tell me which to use.</p>
+</header>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('pexels', this)">📸 Pexels</button>
+  <button class="tab" onclick="showTab('wiki', this)">🌐 Wikimedia</button>
+  <button class="tab" onclick="showTab('unsplash', this)">✨ Unsplash</button>
+</div>
+
+<!-- PEXELS -->
+<div class="panel active" id="panel-pexels">
+  <div class="source-meta">
+    <strong>Pexels</strong> — Modern food & lifestyle photography. Free, no attribution required.
+    High-quality professional shots with great variety.
+    <br>URL format: <code>images.pexels.com/photos/{id}/…</code>
+  </div>
+
+  <div class="section-label">🫘 Edible Beans</div>
+  <div class="grid" id="pexels-edible"></div>
+
+  <div class="section-label">🐾 Cat Toe Beans</div>
+  <div class="grid" id="pexels-cat"></div>
+</div>
+
+<!-- WIKIMEDIA -->
+<div class="panel" id="panel-wiki">
+  <div class="source-meta">
+    <strong>Wikimedia Commons</strong> — Public domain & Creative Commons images.
+    Scientific/encyclopedic style — very accurate but sometimes stark.
+    Cat paw selection is limited.
+    <br>URL format: <code>commons.wikimedia.org/wiki/Special:FilePath/…</code>
+  </div>
+
+  <div class="section-label">🫘 Edible Beans</div>
+  <div class="grid" id="wiki-edible"></div>
+
+  <div class="section-label">🐾 Cat Toe Beans</div>
+  <div class="grid" id="wiki-cat"></div>
+</div>
+
+<!-- UNSPLASH -->
+<div class="panel" id="panel-unsplash">
+  <div class="source-meta">
+    <strong>Unsplash (current)</strong> — Artsy, high-end photography. Free.
+    These are the photo IDs already in the site — some may load correctly, some may not match the bean shown.
+    <br>URL format: <code>images.unsplash.com/photo-{id}?…</code>
+  </div>
+
+  <div class="section-label">🫘 Edible Beans</div>
+  <div class="grid" id="unsplash-edible"></div>
+
+  <div class="section-label">🐾 Cat Toe Beans</div>
+  <div class="grid" id="unsplash-cat"></div>
+</div>
+
+<div class="note">
+  <strong>How to choose:</strong> Scroll through each tab. If images look great everywhere → use that source.
+  If some are missing or wrong → try another. Tell me which tab you like and I'll update <code>data.js</code> to use those URLs.
+</div>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function img(src, emoji, fallbackBg) {
+  const el = document.createElement('img');
+  el.src = src;
+  el.loading = 'lazy';
+  el.onerror = function() {
+    const fb = document.createElement('div');
+    fb.className = 'fail-img';
+    fb.style.background = fallbackBg || '#e8ddd0';
+    fb.textContent = emoji;
+    this.replaceWith(fb);
+  };
+  return el;
+}
+
+function card(name, type, imgEl) {
+  const c = document.createElement('div');
+  c.className = 'bean-card';
+  const label = document.createElement('div');
+  label.className = 'name';
+  label.innerHTML = name + '<br><span class="badge badge-' + type + '">' +
+    (type === 'cat' ? '🐾 Toe Bean' : '🫘 Edible') + '</span>';
+  c.append(imgEl, label);
+  return c;
+}
+
+function pexels(id) {
+  return `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=400`;
+}
+function wiki(filename) {
+  return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(filename)}?width=400`;
+}
+function unsplash(id) {
+  return `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=400&q=80`;
+}
+
+/* ── PEXELS DATA ── */
+const pexelsEdible = [
+  { name: "Black Bean",      id: 7772002  },
+  { name: "Chickpea",        id: 7656561  },
+  { name: "Kidney Bean",     id: 6316671  },
+  { name: "Pinto Bean",      id: 6316673  },
+  { name: "Lentil",          id: 15107600 },
+  { name: "Edamame",         id: 28460867 },
+  { name: "White/Navy Bean", id: 273838   },
+];
+const pexelsCat = [
+  { name: "Cozy Paw",         id: 34557584 },
+  { name: "Close-up Paw",     id: 2123429  },
+  { name: "White Cat Paws",   id: 16860556 },
+  { name: "Toe Beans Up Top", id: 2600397  },
+  { name: "Bottom of Paw",    id: 16191816 },
+  { name: "Crossed Paws",     id: 15141570 },
+];
+
+/* ── WIKIMEDIA DATA ── */
+const wikiEdible = [
+  { name: "Black Bean",   file: "Black_beans.jpg"                             },
+  { name: "Chickpea",     file: "Chickpea_half_cup.JPG"                       },
+  { name: "Kidney Bean",  file: "Kidney_beans.jpg"                            },
+  { name: "Pinto Bean",   file: "Pinto_Beans_Seeds.jpg"                      },
+  { name: "Lentil",       file: "Lentil_seeds.jpg"                           },
+  { name: "Edamame",      file: "Edamame_by_Zesmerelda_in_Chicago.jpg"       },
+  { name: "Lima Bean",    file: "Lima_beans_02.jpg"                          },
+  { name: "Navy Bean",    file: "Navy_beans.jpg"                             },
+  { name: "Cannellini",   file: "Cannellini.jpg"                             },
+];
+const wikiCat = [
+  { name: "White Paw Close-up", file: "Cat_Paw_Up_Close_-_WHITE.JPG"  },
+  { name: "White Paws (wide)",  file: "Cat_Paws_Up_Close_-_WHITE.JPG" },
+  { name: "Cat Paw",            file: "Cat_Paw.JPG"                    },
+  { name: "Kitten Paw",         file: "Kittens_paw.JPG"                },
+  { name: "Miko the Cat",       file: "Miko_cat_paw.jpg"               },
+  { name: "White Cat Paw",      file: "Paw_of_a_white_cat.jpg"         },
+];
+
+/* ── UNSPLASH DATA (current) ── */
+const unsplashEdible = [
+  { name: "Black Bean",      id: "1552489445-a1b9e2a96ee1" },
+  { name: "Chickpea",        id: "1610702667-bacd9f4bfe78" },
+  { name: "Kidney Bean",     id: "1547592180-85f173990554" },
+  { name: "Pinto Bean",      id: "1574201635-d9a5d4e73e41" },
+  { name: "Lentil",          id: "1586201375761-83865001e31c" },
+  { name: "Navy Bean",       id: "1607532941389-6ada5f20df6a" },
+  { name: "Lima Bean",       id: "1477718174775-4e2c3e1e9440" },
+  { name: "Cannellini",      id: "1540189549336-e6e99eb4b72b" },
+  { name: "Edamame",         id: "1546069901-ba9599a7c4f3"   },
+];
+const unsplashCat = [
+  { name: "Pink Toe Beans",   id: "1574144611174-0d596b31b4b8" },
+  { name: "Tabby Beans",      id: "1519052537078-e6302a4968d4" },
+  { name: "Spotted Beans",    id: "1518791841217-8f162f1912da" },
+  { name: "Kitten Beans",     id: "1561037404-61cd46aa615b"   },
+  { name: "Black Cat Beans",  id: "1592194996308-7b43878e84a6" },
+  { name: "Loaf Cat Beans",   id: "1596854407944-bf05f1621e6a" },
+  { name: "Orange Tabby",     id: "1533738363-b7f9aef128ce"   },
+];
+
+function populate(gridId, items, urlFn, type, emoji) {
+  const g = document.getElementById(gridId);
+  items.forEach(b => {
+    const key = b.id || b.file;
+    g.appendChild(card(b.name, type, img(urlFn(key), emoji, '#e8ddd0')));
+  });
+}
+
+populate('pexels-edible',   pexelsEdible,   pexels,   'edible', '🫘');
+populate('pexels-cat',      pexelsCat,      pexels,   'cat',    '🐾');
+populate('wiki-edible',     wikiEdible,     wiki,     'edible', '🫘');
+populate('wiki-cat',        wikiCat,        wiki,     'cat',    '🐾');
+populate('unsplash-edible', unsplashEdible, unsplash, 'edible', '🫘');
+populate('unsplash-cat',    unsplashCat,    unsplash, 'cat',    '🐾');
+</script>
+</body>
+</html>
