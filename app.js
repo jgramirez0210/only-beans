@@ -267,7 +267,7 @@ document.getElementById('upload-form').addEventListener('submit', e => {
 function resetForm() {
   document.getElementById('upload-form').reset();
   document.getElementById('file-preview').innerHTML =
-    '<span class="file-placeholder">Click to choose a photo</span>';
+    '<span class="file-placeholder">Tap or click to choose a photo</span>';
   document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
   document.querySelector('[data-type="cat"]').classList.add('active');
   document.getElementById('form-error').classList.add('hidden');
