@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Only Beans — My Uploads</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🫘</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="pages.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-left">
+      <h1>Only Beans</h1>
+      <p class="tagline">your uploads</p>
+    </div>
+    <div class="header-right">
+      <a href="index.html" class="header-back">← Swipe</a>
+    </div>
+  </header>
+
+  <div class="page-body">
+    <div id="auth-wall" class="auth-wall hidden">
+      <div class="auth-wall-emoji">🫘</div>
+      <h2>Sign in to manage your uploads</h2>
+      <p>Sign in to see the beans you've added to the community deck.</p>
+      <button class="auth-wall-btn" id="wall-signin-btn">Sign in</button>
+    </div>
+
+    <div id="uploads-content" class="hidden">
+      <div class="page-title-row">
+        <h2 class="page-title">🫘 My Uploads</h2>
+        <span class="page-count" id="upload-count"></span>
+      </div>
+      <p class="uploads-subtitle">Beans you've added appear in everyone's deck. Remove them any time.</p>
+      <div id="uploads-grid" class="bean-grid" style="margin-top:20px"></div>
+    </div>
+
+    <div id="uploads-loading" class="hidden">
+      <div class="loading-grid" id="skeleton-grid"></div>
+    </div>
+
+    <div id="uploads-empty" class="empty-state hidden">
+      <div class="empty-state-emoji">🫘</div>
+      <h2>No uploads yet</h2>
+      <p>Add your own bean photos to the community deck!</p>
+      <a href="index.html">Go add a bean →</a>
+    </div>
+  </div>
+
+  <style>
+    .uploads-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      line-height: 1.5;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="supabase.js"></script>
+  <script src="auth.js"></script>
+  <script src="my-beans.js"></script>
+</body>
+</html>

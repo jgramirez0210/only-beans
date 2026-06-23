@@ -76,14 +76,17 @@
           <input type="text" id="bean-fact" placeholder="Something interesting about this bean" maxlength="100">
         </div>
 
-        <div class="form-error hidden" id="form-error">Please add a photo and a name.</div>
+        <div class="form-error hidden" id="form-error"></div>
 
-        <button type="submit" class="submit-btn">Add to Deck</button>
+        <button type="submit" class="submit-btn" id="upload-submit-btn">Add to Deck</button>
       </form>
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="data.js"></script>
+  <script src="supabase.js"></script>
+  <script src="auth.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Only Beans — Liked Beans</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🫘</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="pages.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-left">
+      <h1>Only Beans</h1>
+      <p class="tagline">your liked beans</p>
+    </div>
+    <div class="header-right">
+      <a href="index.html" class="header-back">← Swipe</a>
+    </div>
+  </header>
+
+  <div class="page-body">
+    <div id="auth-wall" class="auth-wall hidden">
+      <div class="auth-wall-emoji">♥</div>
+      <h2>Sign in to see your liked beans</h2>
+      <p>Your likes are saved to your account so you can view them any time.</p>
+      <button class="auth-wall-btn" id="wall-signin-btn">Sign in</button>
+    </div>
+
+    <div id="liked-content" class="hidden">
+      <div class="page-title-row">
+        <h2 class="page-title">♥ Liked Beans</h2>
+        <span class="page-count" id="liked-count"></span>
+      </div>
+      <div class="page-share-all" id="share-all-wrap" style="display:none">
+        <button class="share-all-btn" id="share-all-btn">⬆ Share my bean list</button>
+      </div>
+      <div id="liked-grid" class="bean-grid"></div>
+    </div>
+
+    <div id="liked-loading" class="hidden">
+      <div class="loading-grid" id="skeleton-grid"></div>
+    </div>
+
+    <div id="liked-empty" class="empty-state hidden">
+      <div class="empty-state-emoji">🫘</div>
+      <h2>No liked beans yet!</h2>
+      <p>Head back and start swiping to save your favourites.</p>
+      <a href="index.html">Start swiping →</a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="supabase.js"></script>
+  <script src="auth.js"></script>
+  <script src="liked.js"></script>
+</body>
+</html>
